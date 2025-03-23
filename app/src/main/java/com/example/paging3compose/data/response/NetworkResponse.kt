@@ -1,4 +1,4 @@
-package com.example.paging3compose.data.response
+package com.example.testcompose.data.response
 
 sealed class NetworkResponse<out T> {
     data class Success<out T>(val data: T) : NetworkResponse<T>()

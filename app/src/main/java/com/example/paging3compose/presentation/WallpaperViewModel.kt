@@ -5,28 +5,18 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
-import com.example.paging3compose.data.repo.WallpaperRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flatMapLatest
-import javax.inject.Inject
+import com.example.paging3compose.data.paging.MyPagingSource
 
-@HiltViewModel
-class WallpaperViewModel @Inject constructor(
-    private val repository: WallpaperRepository
-) : ViewModel() {
+class WallpaperViewModel : ViewModel() {
+    val pager = Pager(
+        PagingConfig(
+            pageSize = 20,  // Increase to reduce network calls
+            prefetchDistance = 5,  // Load next page 5 items before the end
+            initialLoadSize = 40,  // Load more items initially
+            enablePlaceholders = false // Disable placeholders for smooth loading
+        )
+    ) {
+        MyPagingSource("people")
+    }.flow.cachedIn(viewModelScope)
 
-    private val _query = MutableStateFlow("people") // Default query
-    val query: StateFlow<String> = _query
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    val pager = query.flatMapLatest { searchQuery ->
-        repository.getWallpapers(searchQuery)
-    }.cachedIn(viewModelScope)
-
-    fun updateQuery(newQuery: String) {
-        _query.value = newQuery
-    }
 }

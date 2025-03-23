@@ -3,10 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
 
-    id("org.jetbrains.kotlin.plugin.serialization") version "2.0.0"
-
-    id("com.google.dagger.hilt.android")
-    id("com.google.devtools.ksp")
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.0"
 }
 
 android {
@@ -62,62 +59,33 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation(libs.androidx.navigation.compose)
+    implementation("androidx.navigation:navigation-compose:2.7.5")
 
-    implementation(libs.material3)
-
-
-    implementation(libs.ktor.client.android)
-    implementation(libs.ktor.ktor.client.serialization)
-    implementation(libs.kotlinx.serialization.json.v130)
-    implementation(libs.ktor.client.logging.jvm)
-    implementation(libs.ktor.ktor.client.serialization)
+    implementation("androidx.compose.material3:material3:1.2.0")
 
 
-    implementation(libs.jetbrains.kotlinx.serialization.json)
+    implementation("io.ktor:ktor-client-android:1.6.4")
+    implementation("io.ktor:ktor-client-serialization:1.6.4")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
+    implementation("io.ktor:ktor-client-logging-jvm:1.6.4")
+    implementation("io.ktor:ktor-client-serialization:1.6.4")
 
-    implementation(libs.ktor.client.gson)
 
-    implementation(libs.coil.compose)
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 
-    implementation (libs.sdp.compose)
+    implementation("io.ktor:ktor-client-gson:1.6.8")
+
+    implementation("io.coil-kt:coil-compose:2.6.0")
+
+    implementation ("com.github.Kaaveh:sdp-compose:1.1.0")
 
     // Paging 3
-    implementation(libs.androidx.paging.compose)  //Use the latest stable version
-    implementation(libs.androidx.paging.runtime.ktx)
+    implementation("androidx.paging:paging-compose:3.3.0-alpha02")  //Use the latest stable version
+    implementation("androidx.paging:paging-runtime-ktx:3.3.0-alpha02")
 
 
-    implementation(libs.haze.materials)
+    implementation("dev.chrisbanes.haze:haze-materials:1.5.1")
 
-    // Hilt Dependencies
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
-
-    // Hilt with Navigation (For Fragments)
-    implementation(libs.androidx.hilt.navigation.fragment)
-
-    // Hilt ViewModel
-    ksp("androidx.hilt:hilt-compiler:1.0.0")
-
-    // Hilt for Navigation Component (if needed)
-    implementation ("androidx.hilt:hilt-navigation-compose:1.0.0")
-
-    // ViewModel & LiveData
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-
-    // Activity KTX (For ViewModel delegation)
-    implementation(libs.androidx.activity.ktx)
-
-    // Room
-    implementation(libs.androidx.room.runtime)
-    ksp(libs.androidx.room.compiler)
-
-    // Room Coroutines Support
-    implementation (libs.androidx.room.ktx)
-
-    // Room Paging Support
-    implementation (libs.androidx.room.paging)
 
 
 }

@@ -1,4 +1,4 @@
-package com.example.paging3compose.data.response
+package com.example.testcompose.data.response
 
 enum class ErrorType {
     NETWORK,

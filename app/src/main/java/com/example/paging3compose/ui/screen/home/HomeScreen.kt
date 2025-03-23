@@ -49,14 +49,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.paging3compose.R
-import com.example.paging3compose.data.model.PhotoEntity
+import com.example.paging3compose.data.model.ImageDataModel
 import com.example.paging3compose.presentation.WallpaperViewModel
 import com.example.paging3compose.ui.theme.Frastha
 import com.example.paging3compose.ui.theme.Jost
@@ -97,10 +96,10 @@ fun HomeScreen(/*weatherState: NetworkResponse<ImageDataModel>*/) {/* when (weat
 }
 
 @Composable
-fun HomeData(viewModel: WallpaperViewModel = hiltViewModel()) {
+fun HomeData() {
 
     val listState = rememberLazyListState()
-
+    val viewModel: WallpaperViewModel = viewModel()
     val lazyPagingItems = viewModel.pager.collectAsLazyPagingItems()
 
     LazyColumn(state = listState) {
@@ -115,20 +114,12 @@ fun HomeData(viewModel: WallpaperViewModel = hiltViewModel()) {
                 ), modifier = Modifier.padding(start = 15.dp)
             )
         }
-        Log.d(TAG, "HomeData: lazyPagingItems.itemCount = ${lazyPagingItems.itemCount}")
         items(lazyPagingItems.itemCount) { index ->
             val photo = lazyPagingItems[index] // Ensure safe access
             photo?.let { ItemFeed(it){} }
         }
-        when (lazyPagingItems.loadState.refresh) {
-            is LoadState.Loading -> item { LoadingView(modifier = Modifier.fillParentMaxSize()) }
-            is LoadState.Error -> item {
-                val error = lazyPagingItems.loadState.refresh as LoadState.Error
-                ErrorItem(message = error.error.localizedMessage ?: "Error", onClickRetry = { lazyPagingItems.retry() })
-            }
-            else -> Unit
-        }
-        /*when {
+
+        when {
             lazyPagingItems.loadState.refresh is LoadState.Loading -> {
                 item { LoadingView(modifier = Modifier.fillParentMaxSize()) }
             }
@@ -158,7 +149,7 @@ fun HomeData(viewModel: WallpaperViewModel = hiltViewModel()) {
                 Log.d(TAG, "HomeData: No errors, so no items to display ")
                 // No errors, so no items to display
             }
-        }*/
+        }
 
     }
 
@@ -212,14 +203,14 @@ fun ErrorItem(
             maxLines = 2,
             modifier = Modifier.padding(bottom = 8.dp)
         )
-        Button(modifier = Modifier.padding(bottom = 100.dp), onClick = onClickRetry) {
+        Button(onClick = onClickRetry) {
             Text("Retry", color = Color.White)
         }
     }
 }
 
 @Composable
-fun ItemFeed(item: PhotoEntity, onClick: () -> Unit) {
+fun ItemFeed(item: ImageDataModel.Photo , onClick: () -> Unit) {
     var isClicked by remember { mutableStateOf(false) }
 
     // Animate scale from 0.9x (shrink) to 1x (normal)
@@ -248,7 +239,7 @@ fun ItemFeed(item: PhotoEntity, onClick: () -> Unit) {
                 onClick()
             }
     ) {
-        BlurryToClearImage(item.original)
+        BlurryToClearImage(item.src.original)
 
         Column(
             modifier = Modifier
