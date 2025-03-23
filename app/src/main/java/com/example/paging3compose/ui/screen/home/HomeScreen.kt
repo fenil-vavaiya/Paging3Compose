@@ -101,8 +101,8 @@ fun HomeData(viewModel: WallpaperViewModel = hiltViewModel()) {
 
     val listState = rememberLazyListState()
 
-    val lazyPagingItems = viewModel.pager.collectAsLazyPagingItems()
-
+    val lazyPagingItems = viewModel.photoList.collectAsLazyPagingItems()
+    Log.d(TAG, "HomeData: itemCount = ${lazyPagingItems.itemCount}")
     LazyColumn(state = listState) {
         item {
             Text(

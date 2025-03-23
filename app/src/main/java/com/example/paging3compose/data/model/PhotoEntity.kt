@@ -19,5 +19,6 @@ data class PhotoEntity(
     val original: String,
     val portrait: String,
     val small: String,
-    val tiny: String
+    val tiny: String,
+    val page: Int,
 )
