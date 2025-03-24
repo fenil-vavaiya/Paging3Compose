@@ -115,12 +115,12 @@ fun NavItem(isSelected: Boolean, screen: Screen, modifier: Modifier, onClick: ()
         Icon(
             painterResource(screen.icon),
             contentDescription = screen.label,
-            tint = if (isSelected) Color.Black else BottomItemDisable
+            tint = if (isSelected) Color.Black else Color.White
         )
         Text(
             text = screen.label,
             style = TextStyle(fontFamily = Jost, fontWeight = FontWeight.Normal),
-            fontSize = 14.sp, color = if (isSelected) Color.Black else BottomItemDisable
+            fontSize = 14.sp, color = if (isSelected) Color.Black else Color.White
         )
         if (isSelected) {
             Box(
